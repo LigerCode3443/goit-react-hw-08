@@ -67,7 +67,7 @@ const slice = createSlice({
   },
 });
 
-export const selectFilteredMeme = createSelector(
+export const selectFilteredMemo = createSelector(
   [slice.selectors.selectContacts, selectFilter],
   (contacts, filter) => {
     return contacts.filter((contact) =>
