@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchContactThunk } from "../redux/contactsOps";
+import { fetchContactThunk } from "../redux/contacts/operations";
 import {
   ContactForm,
   ContactList,
@@ -10,10 +10,10 @@ import {
 } from "components";
 import {
   selectContacts,
-  selectFilteredMemo,
   selectIsError,
   selectIsLoading,
-} from "../redux/contactSlice";
+} from "../redux/contacts/selectors";
+import { selectFilteredMemo } from "../redux/contacts/slice";
 
 export const Contacts = () => {
   const contacts = useSelector(selectContacts);
@@ -31,13 +31,13 @@ export const Contacts = () => {
       <ContactForm />
       <SearchBox />
       {isLoading && <Loader />}
-      {contacts.length > 0 && !isError && (
+      {contacts?.length > 0 && !isError && (
         <ContactList contacts={filterContacts} />
       )}
-      {!contacts.length && !isLoading && !isError && (
+      {!contacts?.length && !isLoading && !isError && (
         <span className="title">No contact </span>
       )}
-      {contacts.length === 0 && contacts.length !== 0 && (
+      {contacts?.length === 0 && contacts.length !== 0 && (
         <span className="title">Contact is not defiant</span>
       )}
 

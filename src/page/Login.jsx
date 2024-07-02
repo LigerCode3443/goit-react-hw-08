@@ -1,8 +1,11 @@
 import { Field, Form, Formik } from "formik";
+import { useDispatch } from "react-redux";
+import { loginThunk } from "../redux/auth/operations";
 
 export const Login = () => {
+  const dispatch = useDispatch();
   const handleSubmit = (value) => {
-    console.log(value);
+    dispatch(loginThunk(value));
   };
   const initialValues = {
     email: "",

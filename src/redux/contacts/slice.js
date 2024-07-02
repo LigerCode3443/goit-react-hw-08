@@ -3,8 +3,10 @@ import {
   addContactThunk,
   deleteContactThunk,
   fetchContactThunk,
-} from "./contactsOps";
-import { selectFilter } from "./filterSlice";
+} from "./operations";
+import { selectFilter } from "../filters/selectors";
+import { selectContacts } from "./selectors";
+
 const initialState = {
   contacts: [],
   isLoading: false,
@@ -14,12 +16,6 @@ const initialState = {
 const slice = createSlice({
   name: "contact",
   initialState,
-  selectors: {
-    selectContacts: (state) => state.contacts,
-    selectIsLoading: (state) => state.isLoading,
-    selectIsError: (state) => state.isError,
-  },
-
   extraReducers: (builder) => {
     builder
       .addCase(fetchContactThunk.fulfilled, (state, action) => {
@@ -68,15 +64,12 @@ const slice = createSlice({
 });
 
 export const selectFilteredMemo = createSelector(
-  [slice.selectors.selectContacts, selectFilter],
+  [selectContacts, selectFilter],
   (contacts, filter) => {
-    return contacts.filter((contact) =>
+    return contacts?.filter((contact) =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
   }
 );
 
 export const contactSlice = slice.reducer;
-export const { selectContacts, selectIsLoading, selectIsError } =
-  slice.selectors;
-export const { setCurrentContact } = slice.actions;
