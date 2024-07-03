@@ -70,12 +70,10 @@ const slice = createSlice({
 export const selectFilteredMemo = createSelector(
   [selectContacts, selectFilter],
   (contacts, filter) => {
-    // if (typeof filter === "number") {
-    //   return contacts.filter((contact) => contact.number.includes(filter));
-    // }
-
-    return contacts.filter((contact) =>
-      contact.name?.toLowerCase().includes(filter?.toLowerCase())
+    return contacts.filter(
+      (contact) =>
+        contact.name?.toLowerCase().includes(filter?.toLowerCase()) ||
+        contact.number.includes(filter)
     );
   }
 );
