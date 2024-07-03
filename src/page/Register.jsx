@@ -1,11 +1,12 @@
 import { Field, Formik, Form } from "formik";
 import { useDispatch } from "react-redux";
 import { registerThunk } from "../redux/auth/operations";
-// Vova_vova@mail.com
+
 export const Register = () => {
   const dispatch = useDispatch();
-  const handleSubmit = (value) => {
+  const handleSubmit = (value, options) => {
     dispatch(registerThunk(value));
+    options.resetForm();
   };
   const initialValues = {
     name: "",

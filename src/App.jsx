@@ -1,17 +1,54 @@
 import { Route, Routes } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import { Layout } from "./components/Layout";
 import { Login } from "./page/Login";
 import { Register } from "./page/Register";
 import { Contacts } from "./page/Contacts";
+import { PrivateRoute } from "./routes/PrivateRoute";
+import { PublicRoute } from "./routes/PublicRoute";
+import { Home } from "./page/Home";
+import { refreshThunk } from "./redux/auth/operations";
+import { selectIsRefresh } from "./redux/auth/selectors";
+import { Loader } from "./components/Loader/Loader";
 
 function App() {
-  return (
+  const dispatch = useDispatch();
+  const isRefresh = useSelector(selectIsRefresh);
+  useEffect(() => {
+    dispatch(refreshThunk());
+  }, [dispatch]);
+  return isRefresh ? (
+    <Loader />
+  ) : (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+      <Route
+        path="/"
+        element={
+          <PrivateRoute>
+            <Layout />
+          </PrivateRoute>
+        }
+      >
+        <Route index element={<Home />} />
         <Route path="/contacts" element={<Contacts />} />
       </Route>
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        }
+      />
     </Routes>
   );
 }

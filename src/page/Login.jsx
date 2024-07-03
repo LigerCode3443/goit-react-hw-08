@@ -1,11 +1,13 @@
 import { Field, Form, Formik } from "formik";
 import { useDispatch } from "react-redux";
 import { loginThunk } from "../redux/auth/operations";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
   const dispatch = useDispatch();
-  const handleSubmit = (value) => {
+  const handleSubmit = (value, options) => {
     dispatch(loginThunk(value));
+    options.resetForm();
   };
   const initialValues = {
     email: "",
@@ -54,6 +56,9 @@ export const Login = () => {
               name="password"
             />
           </label>
+          <p>
+            You dont have an account? <Link to="/register">Register</Link>
+          </p>
           <button type="submit" className="btn btn-warning">
             Login
           </button>

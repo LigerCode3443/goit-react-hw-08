@@ -69,7 +69,7 @@ export const ContactForm = () => {
         </label>
 
         <button type="submit" className={s.btn}>
-          Submit
+          Add Contact
         </button>
       </Form>
     </Formik>

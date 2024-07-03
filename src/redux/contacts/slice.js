@@ -6,6 +6,7 @@ import {
 } from "./operations";
 import { selectFilter } from "../filters/selectors";
 import { selectContacts } from "./selectors";
+import { logoutThunk } from "../auth/operations";
 
 const initialState = {
   contacts: [],
@@ -28,6 +29,9 @@ const slice = createSlice({
         state.contacts = state.contacts.filter(
           (contact) => contact.id !== action.payload
         );
+      })
+      .addCase(logoutThunk.fulfilled, () => {
+        return initialState;
       })
       .addMatcher(
         isAnyOf(
@@ -66,8 +70,12 @@ const slice = createSlice({
 export const selectFilteredMemo = createSelector(
   [selectContacts, selectFilter],
   (contacts, filter) => {
-    return contacts?.filter((contact) =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
+    // if (typeof filter === "number") {
+    //   return contacts.filter((contact) => contact.number.includes(filter));
+    // }
+
+    return contacts.filter((contact) =>
+      contact.name?.toLowerCase().includes(filter?.toLowerCase())
     );
   }
 );

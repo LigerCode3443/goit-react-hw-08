@@ -1,11 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { goitApi } from "../../components/config/goitApi";
+import { goitApi } from "../../config/goitApi";
 
 export const fetchContactThunk = createAsyncThunk(
   "fetchContact",
   async (_, thunkAPI) => {
+    // const { auth } = thunkAPI.getState();
+    // if (!auth.token) {
+    //   return thunkAPI.rejectWithValue("not found");
+    // }
+
     try {
+      // setAuthHeader(auth.token);
       const { data } = await goitApi.get("/contacts");
       return data;
     } catch (error) {
@@ -16,7 +22,12 @@ export const fetchContactThunk = createAsyncThunk(
 export const addContactThunk = createAsyncThunk(
   "addContact",
   async (contact, thunkAPI) => {
+    // const { auth } = thunkAPI.getState();
+    // if (!auth.token) {
+    //   return thunkAPI.rejectWithValue("not found");
+    // }
     try {
+      // setAuthHeader(auth.token);
       const { data } = await goitApi.post("/contacts", contact);
       return data;
     } catch (error) {
@@ -27,7 +38,12 @@ export const addContactThunk = createAsyncThunk(
 export const deleteContactThunk = createAsyncThunk(
   "deleteContact",
   async (id, thunkAPI) => {
+    // const { auth } = thunkAPI.getState();
+    // if (!auth.token) {
+    //   return thunkAPI.rejectWithValue("not found");
+    // }
     try {
+      // setAuthHeader(auth.token);
       const { data } = await goitApi.delete(`/contacts/${id}`);
       return data.id;
     } catch (error) {

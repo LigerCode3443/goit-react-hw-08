@@ -13,7 +13,8 @@ export const SearchBox = () => {
         type="text"
         placeholder="enter contacts"
         onChange={(e) => {
-          dispatch(setFilter(e.target.value));
+          const data = e.target.value;
+          dispatch(setFilter(data));
         }}
       />
     </div>
